@@ -10,56 +10,32 @@ set(0, 'DefaultTextFontName', 'times');
 addpath(pwd, 'class');
 
 %% simulation
-model = JumpPhase;
+t0 = 0.0;
+t1 = 0.03;
+v = 4.2; % [km/h]
+h = 0.02;
+l1 = 0.07;
+l2 = 0.07;
+l3 = 0.07;
+m1 = 0.2;
+m2 = 0.3;
+m3 = 0.3;
+phi = pi/12;
+
+model = JumpPhase(t0, t1, v, h, l1, l2, l3, m1, m2, m3, phi);
 
 syms t
-model.vxCoG(t);
-model.vzCoG(t);
-
-q1_start = pi/6;
+q1_start = pi/12;
 q2_start = pi/6;
-q3_start = pi/4;
-model.angvel(q1_start, q2_start, q3_start);
+q3_start = pi/3;
 
-model.torque(q1_start, q2_start, q3_start);
+model.torque(t, q1_start, q2_start, q3_start);
 
 %% plot
-% tiledlayout(2,1)
-% nexttile
-% fplot(model.vx, [model.t0 model.t1])
-% xlabel('time [s]')
-% ylabel('vx [m/s]')
-% nexttile
-% fplot(model.vz, [model.t0 model.t1])
-% xlabel('time [s]')
-% ylabel('vz [m/s]')
-% nexttile
-% fplot(model.dq2, [model.t0 model.t1])
-% xlabel('time [s]')
-% ylabel('dq2 [rad/s]')
-% nexttile
-% fplot(model.dq3, [model.t0 model.t1])
-% xlabel('time [s]')
-% ylabel('dq3 [rad/s]')
-% nexttile
-% fplot(model.q2, [model.t0 model.t1])
-% xlabel('time [s]')
-% ylabel('q2 [rad]')
-% nexttile
-% fplot(model.q3, [model.t0 model.t1])
-% xlabel('time [s]')
-% ylabel('q3 [rad]')
-
-tiledlayout(3,1)
-nexttile
-fplot(model.tau1, [model.t0 model.t1])
-xlabel('time [s]')
-ylabel('\tau1 [Nm]')
-nexttile
-fplot(model.tau2, [model.t0 model.t1])
-xlabel('time [s]')
-ylabel('\tau2 [Nm]')
-nexttile
-fplot(model.tau3, [model.t0 model.t1])
-xlabel('time [s]')
-ylabel('\tau3 [Nm]')
+fplot(model.tau2, [model.t0 model.t1], 'k', 'LineWidth', 1.2)
+xlabel('time [s]', 'Interpreter', 'latex')
+ylabel('$\tau$ [Nm]', 'Interpreter', 'latex')
+hold on
+fplot(model.tau3, [model.t0 model.t1], '--k', 'LineWidth', 1.2)
+legend('\tau_{2}', '\tau_{3}', 'Location', 'northwest')
+hold off
