@@ -20,14 +20,14 @@ l3 = 0.07;
 m1 = 0.2;
 m2 = 0.3;
 m3 = 0.3;
-phi = pi/12;
+phi = pi/6; % [rad]
 
 model = JumpPhase(t0, t1, v, h, l1, l2, l3, m1, m2, m3, phi);
 
 syms t
-q1_start = pi/12;
-q2_start = pi/6;
-q3_start = pi/3;
+q1_start = 0; % [rad]
+q2_start = 0; % [rad]
+q3_start = pi/6; % [rad]
 
 model.torque(t, q1_start, q2_start, q3_start);
 
